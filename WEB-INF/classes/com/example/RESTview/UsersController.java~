@@ -1,0 +1,113 @@
+package com.example.RESTview;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
+
+@Path("/users")
+public class UsersController{
+	@GET
+	@Produces("text/plain")
+	@Path("/history/{userName}:{password}")
+    	public Response getUserLookups(@PathParam("userName") String userName, @PathParam("password") String password){
+		String message = null;
+		ValidateController validate = new ValidateController();
+		boolean validated = validate.validateUser(userName, password);
+		
+		if(validated){
+			ShowHistoryController history = new ShowHistoryController();
+			if(history != null){
+				String historyMessage = history.getHistory(userName);
+			
+				if(historyMessage != null){
+					message = historyMessage;
+				}//end if statement
+			
+				else{
+					message = "historyMessage is null";
+				}//end else statement
+			}//end if statement
+		
+			else{
+				message = "history is null";
+			}//end else statement
+			
+			return Response.status(201).entity(message).build();
+		}//end if statement
+		else{
+			message = "Username or password is incorrect.";
+			return Response.status(403).entity(message).build();
+		}//end else statement
+	}//end getUserLookups method
+	
+	@GET
+	@Produces("text/plain")
+	@Path("/postLookup/{stockTicker}:{userName}:{password}")
+	public Response getFormattedLookup(@PathParam("stockTicker") String stockTicker, @PathParam("userName") String userName, @PathParam("password") String password){
+		MyJaxBean myJaxBean = new MyJaxBean(stockTicker, userName, password);
+		return addLookup(myJaxBean);
+	}//end getFormattedLookup
+
+	@POST
+	@Produces("text/plain")
+	@Path("/lookup")
+	public Response addLookup(final MyJaxBean myJaxBean){
+		String stockTicker = myJaxBean.getStockTicker();
+		String userName = myJaxBean.getUserName();
+		String password = myJaxBean.getPassword();
+		String message = null;
+
+		ValidateController validate = new ValidateController();
+		boolean validated = validate.validateUser(userName, password);
+		
+		if(validated){
+			LookupController lookup = new LookupController();
+			message = lookup.addLookup(userName, stockTicker);
+			return Response.status(201).entity(message).build();
+		}//end if statement
+		else{
+			message = "{ \"status\" : \"error\", \n" +
+					"\"message\" : \"Username or password incorrect.\" }";
+			return Response.status(403).entity(message).build();
+		}//end else statement*/
+		
+	}//end getUserLookups method
+
+	@GET
+	@Produces("text/plain")
+	@Path("/postRegister/{userName}:{password}")
+	public Response getFormattedRegistration(@PathParam("userName") String userName, @PathParam("password") String password){
+		MyJaxBean myJaxBean = new MyJaxBean(userName, password);
+		return registerUser(myJaxBean);
+	}//end getFormattedLookup
+
+	@POST
+	@Produces("text/plain")
+	@Path("/register/{userName}:{password}")
+	public Response registerUser(final MyJaxBean myJaxBean){
+		String userName = myJaxBean.getUserName();
+		String password = myJaxBean.getPassword();
+		String message = null; 
+		ValidateController checkUser = new ValidateController();
+		boolean userExists = checkUser.validateUser(userName, password);
+		
+		if(!userExists){
+			RegisterController register = new RegisterController();
+			boolean result = register.addUser(userName, password);
+				if(result){
+					message = "{ \"status\" : \"success\", \n" +
+							"\"message\" : \"You've successfully registered.\" }";
+					return Response.status(201).entity(message).build();
+				}//end if statement
+				else{
+					message = "{ \"status\" : \"error\", \n" +
+							"\"message\" : \"Registration Failed.\" }";
+					return Response.status(500).entity(message).build();
+				}//end else statement
+		}//end if statement
+		else{
+			message = "{ \"status\" : \"error\", \n" +
+					"\"message\" : \"Username is already in use, please choose another.\" }";
+			return Response.status(403).entity(message).build();
+		}//end else statement*/
+	}//end registerUser method
+}//end UserHistory class

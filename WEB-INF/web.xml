@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+	xmlns="http://java.sun.com/xml/ns/javaee" version="3.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+        http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"> 
+
+	<!--<servlet>
+		<servlet-name>RestfulContainer</servlet-name>
+		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>com.sun.jersey.config.property.packages</param-name>
+			<param-value>com.example.RESTview</param-value>
+		</init-param>
+		
+		<init-param>
+			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+			<param-value>true</param-value>
+		</init-param>
+
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>RestfulContainer</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>-->
+	
+	<servlet>
+		<servlet-name>Login</servlet-name>
+		<servlet-class>com.example.web.Login</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Login</servlet-name>
+		<url-pattern>/Login</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Profile</servlet-name>
+		<servlet-class>com.example.web.Profile</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Profile</servlet-name>
+		<url-pattern>/Profile</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Logout</servlet-name>
+		<servlet-class>com.example.web.Logout</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Logout</servlet-name>
+		<url-pattern>/Logout</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Register</servlet-name>
+		<servlet-class>com.example.web.Register</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Register</servlet-name>
+		<url-pattern>/Register</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>LookupController</servlet-name>
+		<servlet-class>com.example.web.LookupController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>LookupController</servlet-name>
+		<url-pattern>/LookupController</url-pattern>
+	</servlet-mapping>	
+
+	<servlet>
+		<servlet-name>ShowHistory</servlet-name>
+		<servlet-class>com.example.web.ShowHistory</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ShowHistory</servlet-name>
+		<url-pattern>/ShowHistory</url-pattern>
+	</servlet-mapping>
+</web-app>

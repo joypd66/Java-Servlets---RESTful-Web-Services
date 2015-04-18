@@ -1,0 +1,56 @@
+package com.example.REST;
+
+import com.example.model.*;
+import java.io.*;
+import java.io.IOException;  
+import java.io.PrintWriter;  
+import javax.servlet.ServletException;  
+import javax.servlet.http.HttpServlet;  
+import javax.servlet.http.HttpServletRequest;  
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.*; 
+import javax.servlet.http.*;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Date;
+import java.util.HashMap;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+public class ShowHistoryController{ 
+	public String getHistory(String userName){
+		String message = null;
+
+			//DEBUGGING
+			//message = "Initialized History Message Works";
+
+		Lookup lookup = new Lookup();
+		History[] historyArray = lookup.getHistory(userName);
+
+		if(historyArray != null){
+
+			message = "{ \"searches\" : [ \n";
+			for(int i = 0; i < historyArray.length; i++){				
+				if(i == 0){
+					message = message + "{ \"searchNum\":" + historyArray[i].getSearchNum() + ",\n" +
+								"\"timeStamp\" : \"" + historyArray[i].getTimeStamp() + "\",\n" +
+								"\"stockTicker\" : \"" + historyArray[i].getStockTicker() + "\",\n" +
+								"\"stockPrice\" : " + historyArray[i].getStockPrice() + " }";
+				}//end if statement
+				else{
+					message = message + ",\n\n{ \"searchNum\" : " + historyArray[i].getSearchNum() + ",\n" +
+								"\"timeStamp\" : \"" + historyArray[i].getTimeStamp() + "\",\n" +
+								"\"stockTicker\" : \"" + historyArray[i].getStockTicker() + "\",\n" +
+								"\"stockPrice\" : " + historyArray[i].getStockPrice() + " }";
+				}//end else statement
+			}//end for loop
+
+			message = message + " ]\n}";		
+		}//end if statement
+
+		else{  
+			message = "ERROR CREATING historyArray";
+		}//end else statement
+		return message;
+	}//end getHistory method
+}//end ShowHistory class
